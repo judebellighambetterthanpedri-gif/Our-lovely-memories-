@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medhu & Ayushe - Our Lovely Memories</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Ambient Floating Hearts Background -->
+    <div id="canvas-container"></div>
+
+    <!-- LOCK SCREEN WITH VELVET CURTAINS -->
+    <div id="lock-screen">
+        <div class="curtains-wrapper">
+            <div class="curtain curtain-left" id="curtain-left"></div>
+            <div class="curtain curtain-right" id="curtain-right"></div>
+        </div>
+
+        <div class="lock-card" id="lock-card">
+            <div class="heart-pulse"><i class="fa-solid fa-heart"></i></div>
+            <h1 class="highlight-title">I genuinely love you</h1>
+            <p class="subtitle">Medhu & Ayushe's Secret Vault</p>
+            
+            <div class="passcode-box">
+                <p class="instruction">Enter Secret Key to Open Our World</p>
+                <div class="input-group">
+                    <input type="password" id="passcode-input" placeholder="••••••••" maxlength="10">
+                    <button id="unlock-btn"><i class="fa-solid fa-key"></i> Unlock</button>
+                </div>
+                <p class="hint-text"><i class="fa-solid fa-lightbulb"></i> Hint: Propose Date (DDMMYYYY)</p>
+                <p class="error-msg" id="error-msg">Incorrect Passcode! Try again ❤️</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP INTERFACE -->
+    <div id="main-app" class="hidden">
+        
+        <!-- Header Banner -->
+        <header class="app-header">
+            <div class="header-overlay"></div>
+            <div class="header-content">
+                <p class="top-tagline">Medhu & Ayushe</p>
+                <h1 class="main-love-title">I GENUINELY LOVE YOU</h1>
+                <div class="animated-underline"></div>
+                <p class="subheader-branding">Our Lovely Memories</p>
+
+                <!-- Audio Controls -->
+                <button id="music-btn" class="music-toggle-btn">
+                    <i class="fa-solid fa-music"></i> <span id="music-text">Play Love Melody</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Live Love Counter Section -->
+        <section class="counter-section">
+            <h2><i class="fa-solid fa-clock"></i> Together Since 29/11/2023 at 01:58 AM</h2>
+            <div class="timer-grid">
+                <div class="time-box">
+                    <span id="years">0</span>
+                    <label>Years</label>
+                </div>
+                <div class="time-box">
+                    <span id="months">0</span>
+                    <label>Months</label>
+                </div>
+                <div class="time-box">
+                    <span id="days">0</span>
+                    <label>Days</label>
+                </div>
+                <div class="time-box">
+                    <span id="hours">0</span>
+                    <label>Hours</label>
+                </div>
+                <div class="time-box">
+                    <span id="minutes">0</span>
+                    <label>Minutes</label>
+                </div>
+                <div class="time-box">
+                    <span id="seconds">0</span>
+                    <label>Seconds</label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <main class="container">
+            
+            <!-- Create New Memory Form -->
+            <section class="journal-creator">
+                <h3><i class="fa-solid fa-feather-pointed"></i> Add a New Memory or Feeling</h3>
+                <form id="memory-form">
+                    <div class="form-row">
+                        <div class="input-field">
+                            <label><i class="fa-solid fa-user"></i> Written By:</label>
+                            <select id="author-select" required>
+                                <option value="Medhu">Medhu 💙</option>
+                                <option value="Ayushe">Ayushe 💕</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label><i class="fa-solid fa-face-smile"></i> Mood Tag:</label>
+                            <select id="mood-select">
+                                <option value="Feeling Loved 🥰">Feeling Loved 🥰</option>
+                                <option value="Missing You 🥺">Missing You 🥺</option>
+                                <option value="Special Date 🎉">Special Date 🎉</option>
+                                <option value="Late Night Thoughts 🌙">Late Night Thoughts 🌙</option>
+                                <option value="Forever & Always 💍">Forever & Always 💍</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-field">
+                        <label><i class="fa-solid fa-book-open"></i> Your Feeling / Memory:</label>
+                        <textarea id="memory-text" rows="4" placeholder="Write your thoughts, feelings, or a sweet memory..." required></textarea>
+                    </div>
+
+                    <div class="input-field">
+                        <label><i class="fa-solid fa-image"></i> Add Photo (Optional File upload or Photo URL):</label>
+                        <input type="file" id="image-file" accept="image/*">
+                        <input type="text" id="image-url" placeholder="Or paste Image URL (e.g. https://...)" style="margin-top: 8px;">
+                    </div>
+
+                    <button type="submit" class="submit-btn"><i class="fa-solid fa-paper-plane"></i> Save Memory Forever</button>
+                </form>
+            </section>
+
+            <!-- Memory Feed / Timeline -->
+            <section class="memories-feed">
+                <div class="feed-header">
+                    <h3><i class="fa-solid fa-box-archive"></i> Our Timeline of Memories</h3>
+                    <div class="filter-box">
+                        <span>Filter: </span>
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="Medhu">Medhu's</button>
+                        <button class="filter-btn" data-filter="Ayushe">Ayushe's</button>
+                    </div>
+                </div>
+
+                <div id="memories-list" class="memories-list">
+                    <!-- Memories will load dynamically here -->
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Made with ❤️ for Medhu & Ayushe | Infinite Love & Memories</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
